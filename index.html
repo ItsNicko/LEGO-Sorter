@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Power Group Slide</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .active {
+      display: flex;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .title {
+      font-size: 2.5em;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      color: #555;
+      margin-top: 0;
+    }
+
+    ul {
+      font-size: 1.1em;
+      line-height: 1.6;
+      padding-left: 20px;
+    }
+
+    .emoji {
+      font-size: 1.5em;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Project  -->
+  <div class="slide active" style="background-color: #ffffff;">
+    <div class="title">Overview</div>
+    <h2>AI Powered LEGO Brick Detection System</h2>
+    <p><strong>Group:</strong> Power and Control – Advanced Engineering</p>
+    <ul>
+      <li><strong>Task:</strong> Detect LEGO brick type and color using AI</li>
+      <li><strong>Tools:</strong> TensorFlow, Orange Pi, motors, LCD touchscreen</li>
+      <li><strong>Target User:</strong> Klingbile / Any average person that can use a vending machine</li>
+    </ul>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide" style="background-color: #eaf6ff;">
+    <div class="title">Training the AI</div>
+    <ul>
+      <li>Creating a custom dataset of LEGO bricks (photos + labeled types/colors)</li>
+      <li>Also using a Blender automation to complete the amount of photos we will need</li>
+      <li>Using TensorFlow to train an image classification model</li>
+      <li>Running the model locally on an Orange Pi</li>
+      <li>Model requirements: confidence scoring, multi-object detection, fine-grained color recognition</li>
+      <li><strong>Our model will be used by the Color Sorting group</strong> to identify bricks before sorting</li>
+    </ul>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="slide" style="background-color: #fff3e6;">
+    <div class="title">Power & Motors</div>
+    <ul>
+      <li>Power requirements and PSU options</li>
+      <li>Motor control / Connections to brain </li>
+      <li>Supporting both macro (general) and micro (precise) sorting</li>
+      <li>Power efficiency</li>
+      <li>Talk with the Color Sorting group to support their sorting</li>
+    </ul>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide" style="background-color: #f0f7ea;">
+    <div class="title">Input Group</div>
+    <ul>
+      <li>Collaborate with the Input group to build the LCD touchscreen UI</li>
+      <li>UI features: Diffent types of sorting buttons.</li>
+      <li>aesthetic interface design</li>
+    </ul>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="slide" style="background-color: #f9f9f9;">
+    <div class="title">What’s Next</div>
+    <ul>
+      <li>Start dataset creation and model training</li>
+      <li>Finalize power and motor help</li>
+      <li>Work with the Input Group on UI development</li>
+      <li><strong>Provide our AI model to the Color Sorting group</strong> for use in automated sorting</li>
+    </ul>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      } else if (e.key === 'ArrowLeft') {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+    });
+
+    document.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+  </script>
+
+</body>
+</html>
