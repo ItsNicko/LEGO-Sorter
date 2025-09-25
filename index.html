@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly Pages</title>
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --card: #ffffff;
+      --text: #333;
+      --accent: #0077cc;
+      --border: #ddd;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weekly Pages</h1>
+  <div class="grid" id="week-grid"></div>
+
+  <script>
+    fetch('weeks.json')
+      .then(res => res.json())
+      .then(weeks => {
+        const grid = document.getElementById('week-grid');
+        weeks.forEach(file => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          const link = document.createElement('a');
+          link.href = file;
+          link.textContent = file.replace('.html', '');
+          card.appendChild(link);
+          grid.appendChild(card);
+        });
+      })
+      .catch(err => {
+        document.getElementById('week-grid').innerHTML = '<p>Failed to load weeks.json</p>';
+        console.error('Error loading weeks.json:', err);
+      });
+  </script>
+</body>
+</html>
