@@ -5,89 +5,163 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weekly Pages</title>
   <style>
-    :root {
-      --bg: #f5f5f5;
-      --card: #ffffff;
-      --text: #333;
-      --accent: #0077cc;
-      --border: #ddd;
-    }
+:root {
+  --bg: #fdf6e3;
+  --card: #fff8e1;
+  --text: #3e3e3e;
+  --accent: #d97706; /* muted orange */
+  --accent-hover: #b45309;
+  --border: #e0c097;
+  --highlight: #a3b18a; /* avocado green */
+  --indicator: #6b4226; /* soft brown */
+  --font-title: 'Segoe UI', sans-serif;
+}
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
+body {
+  margin: 0;
+  font-family: var(--font-title);
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
 
-    h1 {
-      margin-bottom: 1rem;
-      font-size: 2rem;
-      font-weight: 600;
-    }
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1rem;
-      width: 100%;
-      max-width: 800px;
-    }
+.grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 2rem;
+  padding: 1rem 0;
+  width: 100%;
+  max-width: 900px;
+}
 
-    .card {
-      background-color: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease;
-    }
+.card {
+  flex: 0 0 200px;
+  scroll-snap-align: center;
+  background-color: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  box-shadow: none;
+}
 
-    .card:hover {
-      transform: translateY(-2px);
-    }
+.card:hover {
+  transform: scale(1.03);
+}
 
-    .card a {
-      text-decoration: none;
-      color: var(--accent);
-      font-weight: 500;
-    }
+.card a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
 
-    footer {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #888;
-    }
+.card a:hover {
+  color: var(--accent-hover);
+}
+
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--indicator);
+}
+
+/* Slide indicators */
+.indicators {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--border);
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+  background-color: var(--highlight);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .card {
+    flex: 0 0 160px;
+    padding: 1rem;
+  }
+
+  .grid {
+    gap: 1rem;
+  }
+}
+
   </style>
 </head>
 <body>
   <h1>Weekly Pages</h1>
   <div class="grid" id="week-grid"></div>
 
-  <script>
-    fetch('weeks.json')
-      .then(res => res.json())
-      .then(weeks => {
-        const grid = document.getElementById('week-grid');
-        weeks.forEach(file => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          const link = document.createElement('a');
-          link.href = file;
-          link.textContent = file.replace('.html', '');
-          card.appendChild(link);
-          grid.appendChild(card);
-        });
-      })
-      .catch(err => {
-        document.getElementById('week-grid').innerHTML = '<p>Failed to load weeks.json</p>';
-        console.error('Error loading weeks.json:', err);
+<div class="indicators" id="slide-indicators"></div>
+
+<script>
+  fetch('weeks.json')
+    .then(res => res.json())
+    .then(weeks => {
+      const grid = document.getElementById('week-grid');
+      const indicators = document.getElementById('slide-indicators');
+
+      weeks.forEach((file, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const link = document.createElement('a');
+        link.href = file;
+        link.textContent = file.replace('.html', '');
+        card.appendChild(link);
+        grid.appendChild(card);
+
+        const dot = document.createElement('div');
+        dot.className = 'indicator';
+        if (index === 0) dot.classList.add('active');
+        indicators.appendChild(dot);
       });
-  </script>
+
+      // Keyboard navigation
+      document.addEventListener('keydown', e => {
+        const cards = document.querySelectorAll('.card');
+        const activeIndex = [...indicators.children].findIndex(dot => dot.classList.contains('active'));
+        let nextIndex = activeIndex;
+
+        if (e.key === 'ArrowRight') nextIndex = Math.min(activeIndex + 1, cards.length - 1);
+        if (e.key === 'ArrowLeft') nextIndex = Math.max(activeIndex - 1, 0);
+
+        cards[nextIndex].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        indicators.querySelector('.active')?.classList.remove('active');
+        indicators.children[nextIndex].classList.add('active');
+      });
+    })
+    .catch(err => {
+      document.getElementById('week-grid').innerHTML = '<p>Failed to load weeks.json</p>';
+      console.error('Error loading weeks.json:', err);
+    });
+</script>
+
 </body>
 </html>
