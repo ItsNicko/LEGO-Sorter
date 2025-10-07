@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 3 - Progress Report</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .active {
+      display: flex;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .title {
+      font-size: 2.5em;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      color: #555;
+      margin-top: 0;
+    }
+
+    ul {
+      font-size: 1.1em;
+      line-height: 1.6;
+      padding-left: 20px;
+    }
+
+    .emoji {
+      font-size: 1.5em;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1 -->
+  <div class="slide active" style="background-color: #ffffff;">
+    <div class="title">Week 3 Update</div>
+    <h2>Optimizing AI Performance & Hardware</h2>
+    <ul>
+      <li>Built a camera system using OpenCV to detect LEGO-like colors</li>
+      <li>Trained a TensorFlow model on a small dataset</li>
+      <li>Initial deployment on Orange Pi was laggy</li>
+    </ul>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide" style="background-color: #eaf6ff;">
+    <div class="title">Performance Tuning</div>
+    <ul>
+      <li> Reduced input pixel size to improve speed</li>
+      <li> Still laggy — converted model to TensorFlow Lite</li>
+      <li> TensorFlow Lite model ran smoothly on Orange Pi</li>
+      <li>TODO: Model act like a tool/API for the sorting machine</li>
+    </ul>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="slide" style="background-color: #fff3e6;">
+    <div class="title">Color Sorting Model</div>
+    <ul>
+      <li> Developing a more accurate color sorting model</li>
+      <li> Machine will use model output dynamically</li>
+      <li> Integration with sorting logic underway</li>
+    </ul>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide" style="background-color: #f0f7ea;">
+    <div class="title">Hardware Troubleshooting</div>
+    <ul>
+      <li> Diagnosed and fixed 3D printer issues</li>
+      <li> Printer now functioning properly</li>
+      <li> Monitoring for future reliability</li>
+    </ul>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="slide" style="background-color: #f9f9f9;">
+    <div class="title">Next Steps</div>
+    <ul>
+      <li> Continue refining color sorting model</li>
+      <li> Integrate model with sorting hardware</li>
+      <li> Capture more training data if needed</li>
+      <li> Begin testing full pipeline with live input</li>
+    </ul>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      } else if (e.key === 'ArrowLeft') {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+    });
+
+    document.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+  </script>
+
+</body>
+</html>
