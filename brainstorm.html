@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 0 - Brainstorming</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .active {
+      display: flex;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .title {
+      font-size: 2.5em;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      color: #555;
+      margin-top: 0;
+    }
+
+    ul {
+      font-size: 1.1em;
+      line-height: 1.6;
+      padding-left: 20px;
+    }
+
+    .emoji {
+      font-size: 1.5em;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1 -->
+  <div class="slide active" style="background-color: #ffffff;">
+    <div class="title">Brainstorming Concepts</div>
+    <h2>Raw brainstorming</h2>
+    <ul>
+      <li>Multiple sketches and Figjam/Figma layouts created</li>
+      <li>Focus on mechanical and AI-powered sorting systems</li>
+      <li>Group-wide contributions across design, presentation, and troubleshooting</li>
+    </ul>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide" style="background-color: #eaf6ff;">
+    <div class="title">Mechanical Sorting Ideas</div>
+    <ul>
+      <li>Grizzly Bars – used to separate large and small LEGO pieces</li>
+      <li>Nail Sorter – inspired by TikTok</li>
+      <li>Rolling Tumbler – smushes parts to seperate individualy</li>
+      <li>Gravity Sorter – uses incline and weight to guide bricks</li>
+      <li>V-Block and V-shaker – vibration sorting and alignment</li>
+    </ul>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="slide" style="background-color: #f0f7ea;">
+    <div class="title">Team Contributions</div>
+    <ul>
+      <li>Sketches by Tucker, Caden, Dreyden, and others</li>
+      <li>Figma layouts by Quinn, Samantha, Lucy, and Scott</li>
+      <li>Presentation led by Jaxon, Dylan, Tegan, and Michael</li>
+      <li>Mechanical focus by Tristan, Kaleb, and Blake</li>
+      <li>Idea refinement and troubleshooting by Kjell and Gabriel</li>
+    </ul>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide" style="background-color: #f9f9f9;">
+    <div class="title">Next Steps</div>
+    <ul>
+      <li>Create mechanical sorting prototypes</li>
+      <li>Train AI</li>
+      <li>Integrate color sorting with mechanical systems</li>
+      <li>Refine UI and presentation flow</li>
+      <li>Document all ideas and sketches for future reference</li>
+    </ul>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      } else if (e.key === 'ArrowLeft') {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+    });
+
+    document.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+  </script>
+
+</body>
+</html>
