@@ -62,7 +62,7 @@ def color_thread():
             with lock:
                 result = run_inference(color_model, frame_global)
             color_result = result
-            # print("Color result:", result)
+            print("Color result:", result)
 
 # -------------------------
 # Shape detection thread
@@ -75,7 +75,7 @@ def shape_thread():
             with lock:
                 result = run_inference(shape_model, frame_global)
             shape_result = result
-            # print("Shape result:", result)
+            print("Shape result:", result)
 
 # -------------------------
 # Start threads
